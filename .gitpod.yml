@@ -1,4 +1,11 @@
+# Use a custom Docker images as workspace image
 image:
   file: gitpod.Dockerfile
+# Build yuzu on workspace init (first start)
 tasks:
 - init: mkdir build && cd build && cmake ../ && make -j 2
+# Launch yuzu on each workspace start
+  command: /workspace/yuzu/build/bin/yuzu
+# Expose VNC port by default
+ports:
+- port: 6080

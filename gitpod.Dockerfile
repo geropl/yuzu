@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full:latest
+FROM gitpod/workspace-full-vnc:latest
 
 USER root
 
@@ -8,6 +8,13 @@ RUN apt-get update && apt-get install -yq \
         cmake \
         p7zip-full \
         wget \
+        # GPU driver and stuff
+        libgl1-mesa-dri \
+        # x11-xserver-utils \
+        # x11vnc \
+        # xinit \
+        # xserver-xorg-video-dummy \
+        # xserver-xorg-input-void \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # We need QT, but for comsic (which gitpod/workspace-full is currently based) offers only 5.11
@@ -20,5 +27,7 @@ RUN wget https://git.kaidan.im/lnj/qli-installer/raw/master/qli-installer.py
 RUN chmod +x qli-installer.py
 RUN pip install requests
 RUN ./qli-installer.py 5.10.0 linux desktop
+RUN echo 'export Qt5_DIR="/home/gitpod/5.10.0/gcc_64/lib/cmake/Qt5"' >> /home/gitpod/.bashrc
+RUN echo 'export QT_QPA_PLATFORM_PLUGIN_PATH="/home/gitpod/5.10.0/gcc_64/plugins/platforms/"' >> /home/gitpod/.bashrc
 
 USER root
