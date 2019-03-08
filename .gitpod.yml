@@ -1,7 +1,7 @@
 # Use a custom Docker images as workspace image
 image:
   file: gitpod.Dockerfile
-# Build yuzu on workspace init (first start)
+# Build yuzu on workspace init (the first start after creation of the workspace)
 tasks:
 - init: mkdir build && cd build && cmake ../ && make -j 2
 # Launch yuzu on each workspace start
